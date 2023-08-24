@@ -1,0 +1,93 @@
+#include <stdio.h>
+
+void printArray(int arr[], int size) {
+    printf("Array elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void insertElement(int arr[], int *size, int position, int element) {
+    if (position < 0 || position > *size) {
+        printf("Invalid position for insertion.\n");
+        return;
+    }
+
+    for (int i = *size - 1; i >= position; i--) {
+        arr[i + 1] = arr[i];
+    }
+
+    arr[position] = element;
+    (*size)++;
+    printf("Element inserted successfully.\n");
+}
+
+void deleteElement(int arr[], int *size, int position) {
+    if (position < 0 || position >= *size) {
+        printf("Invalid position for deletion.\n");
+        return;
+    }
+
+    for (int i = position; i < *size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    (*size)--;
+    printf("Element deleted successfully.\n");
+}
+
+int main() {
+    int arr[100];
+    int size = 0;
+    int choice, position, element;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Read array\n");
+        printf("2. Print array\n");
+        printf("3. Insert element\n");
+        printf("4. Delete element\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter the value of N: ");
+                scanf("%d", &size);
+                printf("Enter %d integer elements:\n", size);
+                for (int i = 0; i < size; i++) {
+                    scanf("%d", &arr[i]);
+                }
+                break;
+
+            case 2:
+                printArray(arr, size);
+                break;
+
+            case 3:
+                printf("Enter the position for insertion: ");
+                scanf("%d", &position);
+                printf("Enter the element to insert: ");
+                scanf("%d", &element);
+                insertElement(arr, &size, position, element);
+                break;
+
+            case 4:
+                printf("Enter the position for deletion: ");
+                scanf("%d", &position);
+                deleteElement(arr, &size, position);
+                break;
+
+            case 5:
+                printf("Exiting the program.\n");
+                break;
+
+            default:
+                printf("Invalid choice. Please select a valid option.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
